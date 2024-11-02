@@ -1,0 +1,98 @@
+#include <iostream>
+using namespace std;
+
+class Complex {
+private:
+    double real;
+    double imag;
+
+public:
+    Complex(double r = 0.0, double i = 0.0) : real(r), imag(i) {}
+
+    void display() const {
+        cout << real << " + " << imag << "i" << endl;
+    }
+    Complex operator+(const Complex& other) const {
+        return Complex(real + other.real, imag + other.imag);
+    }
+    Complex operator-(const Complex& other) const {
+        return Complex(real - other.real, imag - other.imag);
+    }
+    Complex operator*(const Complex& other) const {
+        return Complex(real * other.real - imag * other.imag, real * other.imag + imag * other.real);
+    }
+    Complex operator/(const Complex& other) const {
+        double denom = other.real * other.real + other.imag * other.imag;
+        if (denom == 0) {
+            cout << "Erreur : division par zéro." << endl;
+            return Complex(0, 0);
+        }
+        return Complex((real * other.real + imag * other.imag) / denom,
+                       (imag * other.real - real * other.imag) / denom);
+    }
+
+    bool operator==(const Complex& other) const {
+        return real == other.real && imag == other.imag;
+    }
+};
+
+int main() {
+    double real1, imag1, real2, imag2;
+    int choix;
+
+    cout << "Entrez la partie réelle du premier nombre complexe : ";
+    cin >> real1;
+    cout << "Entrez la partie imaginaire du premier nombre complexe : ";
+    cin >> imag1;
+    Complex c1(real1, imag1);
+
+    cout << "Entrez la partie réelle du second nombre complexe : ";
+    cin >> real2;
+    cout << "Entrez la partie imaginaire du second nombre complexe : ";
+    cin >> imag2;
+    Complex c2(real2, imag2);
+
+    cout << "\nChoisissez une opération :\n";
+    cout << "1. Addition\n";
+    cout << "2. Soustraction\n";
+    cout << "3. Multiplication\n";
+    cout << "4. Division\n";
+    cout << "5. Égalité\n";
+    cout << "Votre choix : ";
+    cin >> choix;
+
+    Complex result;
+    switch (choix) {
+        case 1: 
+            result = c1 + c2;
+            cout << "Résultat de l'addition : ";
+            result.display();
+            break;
+        case 2:  
+            result = c1 - c2;
+            cout << "Résultat de la soustraction : ";
+            result.display();
+            break;
+        case 3:  
+            result = c1 * c2;
+            cout << "Résultat de la multiplication : ";
+            result.display();
+            break;
+        case 4:  
+            result = c1 / c2;
+            cout << "Résultat de la division : ";
+            result.display();
+            break;
+        case 5:  
+            if (c1 == c2)
+                cout << "Les nombres complexes sont égaux.\n";
+            else
+                cout << "Les nombres complexes ne sont pas égaux.\n";
+            break;
+        default:
+            cout << "Choix non valide.\n";
+            break;
+    }
+
+    return 0;
+}
