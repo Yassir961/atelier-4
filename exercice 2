@@ -1,0 +1,45 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Animal {
+private:
+    string nom;
+    int age;
+
+public:
+    void set_value(string n, int a) {
+        nom = n;
+        age = a;
+    }
+    virtual void afficher_info() const {
+        cout << "Nom: " << nom << ", Age: " << age << " ans" << endl;
+    }
+};
+class Zebra : public Animal {
+public:
+    void afficher_info() const override {
+        Animal::afficher_info();
+        cout << "Informations: Le zèbre est originaire des plaines africaines." << endl;
+    }
+};
+class Dolphin : public Animal {
+public:
+    void afficher_info() const override {
+        Animal::afficher_info();
+        cout << "Informations: Le dauphin est originaire des océans du monde entier." << endl;
+    }
+};
+int main() {
+
+    Zebra zebre;
+    Dolphin dauphin;  
+    zebre.set_value("Marty", 5);
+    dauphin.set_value("Flipper", 8);
+    cout << "Informations sur le zèbre:" << endl;
+    zebre.afficher_info();
+
+    cout << "\nInformations sur le dauphin:" << endl;
+    dauphin.afficher_info();
+    return 0;
+}
